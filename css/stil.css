@@ -432,3 +432,10 @@ li.tm .ik-d{background:var(--yesil);border-color:var(--yesil)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 .ust-sag .dugme{white-space:nowrap}
 @media (min-width:901px) and (max-width:1120px){.menu{gap:.9rem}.menu a{font-size:.86rem}.logo img{height:34px}.ogr-link{display:none}}
+
+/* Şifre göster / gizle */
+.sifre-sar{position:relative;display:block}
+.sifre-sar input{padding-right:5.2rem!important}
+.sifre-goz{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--kirmizi);font-weight:700;font-size:.9rem;cursor:pointer;padding:.45rem .6rem;border-radius:8px}
+.sifre-goz:hover{background:#d10f1414}
+.sifre-goz:focus-visible{outline:3px solid #d10f1433}

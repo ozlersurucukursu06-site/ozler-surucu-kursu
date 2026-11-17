@@ -127,9 +127,31 @@
     if ('serviceWorker' in navigator && location.protocol.indexOf('http') === 0) navigator.serviceWorker.register('sw.js').catch(function () {});
   };
 
+
+  /* Şifre kutularına "Göster / Gizle" düğmesi (sonradan eklenen formlar dahil) */
+  OZ.sifreGoster = function () {
+    function sar(inp) {
+      if (inp.getAttribute('data-sg') || inp.type !== 'password') return;
+      inp.setAttribute('data-sg', '1');
+      var kab = document.createElement('span'); kab.className = 'sifre-sar';
+      inp.parentNode.insertBefore(kab, inp); kab.appendChild(inp);
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'sifre-goz';
+      b.setAttribute('aria-label', 'Şifreyi göster'); b.setAttribute('aria-pressed', 'false'); b.textContent = 'Göster';
+      b.addEventListener('click', function () {
+        var ac = inp.type === 'password'; inp.type = ac ? 'text' : 'password';
+        b.textContent = ac ? 'Gizle' : 'Göster'; b.setAttribute('aria-pressed', ac ? 'true' : 'false');
+        b.setAttribute('aria-label', ac ? 'Şifreyi gizle' : 'Şifreyi göster');
+      });
+      kab.appendChild(b);
+    }
+    function tara() { var l = document.querySelectorAll('input[type=password]'); for (var i = 0; i < l.length; i++) sar(l[i]); }
+    tara();
+    if (window.MutationObserver) new MutationObserver(tara).observe(document.body, { childList: true, subtree: true });
+  };
+
   /* Her sayfa açılışında */
   OZ.boot = function () {
-    OZ.kur(); OZ.demoBandi(); OZ.doldur();
+    OZ.kur(); OZ.demoBandi(); OZ.doldur(); OZ.sifreGoster();
     OZ.$$('[data-paylas]').forEach(function (kutu) {
       var url = location.href.split('#')[0], baslik = kutu.getAttribute('data-baslik') || document.title, b = encodeURIComponent(baslik + ' ' + url);
       var wa = kutu.querySelector('[data-p="wa"]'), fb = kutu.querySelector('[data-p="fb"]'), nb = kutu.querySelector('[data-p="native"]');
